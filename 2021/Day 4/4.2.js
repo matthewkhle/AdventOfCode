@@ -1,6 +1,6 @@
 const fs = require("fs")
 
-const fileContents = fs.readFileSync("./2021/Day 4/sample.txt", "utf8")
+const fileContents = fs.readFileSync("./2021/Day 4/4.txt", "utf8")
 
 let dataSeparatedByLine = fileContents.split("\r\n")
 
@@ -26,7 +26,11 @@ for (let i = 2; i < dataSeparatedByLine.length; i += 6) {
 		}
 		board.push(row)
 	}
-	boards.push(board)
+	let boardDict = {
+		board: board,
+		won: false,
+	}
+	boards.push(boardDict)
 }
 
 let numberDrawn = -1
@@ -37,7 +41,7 @@ let drawNumber = () => {
 	// Go through all the boards
 	for (let i = 0; i < boards.length; i++) {
 		// Go through each spot on a given board
-		let board = boards[i]
+		let board = boards[i].board
 		for (let j = 0; j < board.length; j++) {
 			let row = board[j]
 
@@ -52,15 +56,16 @@ let drawNumber = () => {
 	}
 }
 
-let winnerFound = () => {
+let checkWinners = () => {
 	// Go through all the boards
 	for (let i = 0; i < boards.length; i++) {
-		let board = boards[i]
-		if (isWinner(board)) {
-			return true
+		if (!boards[i].won) {
+			let board = boards[i].board
+			if (isWinner(board)) {
+				boards[i].won = true
+			}
 		}
 	}
-	return false
 }
 
 let winningBoard = null
@@ -103,27 +108,38 @@ let isWinner = (board) => {
 	return false
 }
 
-while (!winnerFound() && numbersDrawn.length >= 0) {
+let allBoardsWon = () => {
+	for (let i = 0; i < boards.length; i++) {
+		if (!boards[i].won) {
+			return false
+		}
+	}
+	return true
+}
+
+while (!allBoardsWon() && numbersDrawn.length > 0) {
 	drawNumber()
+	checkWinners()
+	// console.log(numberDrawn)
 }
 
 let boardSum = (board) => {
 	let total = 0
 	for (let i = 0; i < board.length; i++) {
-        for (let j = 0; j < board[i].length; j++) {
-            let spot = board[i][j]
-            if (!spot.drawn) {
-                total += spot.number
-            }
-        }
-    }
-    return total
+		for (let j = 0; j < board[i].length; j++) {
+			let spot = board[i][j]
+			if (!spot.drawn) {
+				total += spot.number
+			}
+		}
+	}
+	return total
 }
 
-// console.log(numbersDrawn.length)
+// console.log()
 // console.log(winningBoard)
-console.log(boardSum(winningBoard))
-console.log(numberDrawn)
+// console.log(boardSum(winningBoard))
+// console.log(numberDrawn)
 console.log(boardSum(winningBoard) * numberDrawn)
 
 // boards.forEach((element) => {

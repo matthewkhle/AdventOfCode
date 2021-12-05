@@ -103,7 +103,7 @@ let isWinner = (board) => {
 	return false
 }
 
-while (!winnerFound() && numbersDrawn.length >= 0) {
+while (!winnerFound() && numbersDrawn.length > 0) {
 	drawNumber()
 }
 
