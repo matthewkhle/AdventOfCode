@@ -8,7 +8,6 @@ for (let i = 0; i < ages.length; i++) {
 }
 
 // console.log(ages)
-let ages2 = []
 
 for (let day = 0; day < 80; day++) {
 	let originalLength = ages.length
@@ -22,6 +21,6 @@ for (let day = 0; day < 80; day++) {
 	}
 }
 
-console.log(ages.length + ages2.length)
+console.log(ages.length)
 
 // console.log(ages)
