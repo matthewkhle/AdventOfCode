@@ -13,15 +13,21 @@ let best = null
 
 let getCost = (newPosition) => {
 	let cost = 0
-	positions.forEach((position) => (cost += Math.abs(position - newPosition)))
-    return cost
+
+	let movementCost = (position) => {
+		let k = Math.abs(newPosition - position)
+		cost += ((k + 1) * k) / 2
+	}
+	positions.forEach(movementCost)
+
+	return cost
 }
 
 for (let newPosition = min; newPosition < max; newPosition++) {
-    let cost = getCost(newPosition)
-    if (cost < best || best == null) {
-        best = cost
-    }
+	let cost = getCost(newPosition)
+	if (cost < best || best == null) {
+		best = cost
+	}
 }
 
 console.log(best)
