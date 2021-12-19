@@ -2,25 +2,33 @@ const fs = require("fs")
 
 const fileContents = fs.readFileSync("./2021/Day 6/6.txt", "utf8")
 
-let ages = fileContents.split(",")
-for (let i = 0; i < ages.length; i++) {
-	ages[i] = parseInt(ages[i])
+let startingFish = fileContents.split(",")
+for (let i = 0; i < startingFish.length; i++) {
+	startingFish[i] = parseInt(startingFish[i])
 }
 
-// console.log(ages)
 
-for (let day = 0; day < 80; day++) {
-	let originalLength = ages.length
-	for (let i = 0; i < originalLength; i++) {
-		if (ages[i] == 0) {
-			ages[i] = 6
-			ages.push(8)
-		} else {
-			ages[i]--
-		}
-	}
+let fish = new Array(9).fill(0)
+
+for (let i = 0; i < startingFish.length; i++) {
+    fish[startingFish[i]] += 1
 }
 
-console.log(ages.length)
+for (let day = 0; day < 256; day++) {
+	// shift all to the left, 0 goes to 6
 
-// console.log(ages)
+	let reproducingFish = fish.shift()
+
+	fish[6] += reproducingFish
+
+	// reproduce
+	fish.push(reproducingFish)
+}
+
+let count = 0
+for (let i = 0; i < fish.length; i++) {
+    count += fish[i]
+}
+
+console.log(count)
+// console.log(fish)
