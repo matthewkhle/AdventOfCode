@@ -142,11 +142,29 @@ let performStep = () => {
 	}
 }
 
-// go through x amount of steps
-let targetStep = 100
-for (let step = 0; step < targetStep; step++) {
+// // go through x amount of steps
+// let targetStep = 100
+// for (let step = 0; step < targetStep; step++) {
+// 	performStep()
+// }
+
+let steps = 0
+
+let allSimulatneouslyFlashed = () => {
+	for (let y = 0; y < octopi.length; y++) {
+		for (let x = 0; x < octopi[y].length; x++) {
+			if (octopi[y][x].energyLevel != 0) {
+				return false
+			}
+		}
+	}
+	return true
+}
+while (!allSimulatneouslyFlashed()) {
 	performStep()
+	steps++
 }
 
-// console.log(octopi[0][0].energyLevel)
-console.log(flashCount)
+// console.log(flashCount)
+
+console.log(steps)
