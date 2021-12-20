@@ -16,7 +16,7 @@ for (let i = 0; i < dataSeparatedByLine.length; i++) {
 
 let paths = []
 
-// add start connections
+// add intial paths with start
 for (let i = 0; i < connections.length; i++) {
 	let connection = connections[i]
 	if (connection[0] == "start") {
@@ -70,21 +70,5 @@ for (let i = 0; i < paths.length; i++) {
     // break
 }
 
-// if a
-
 console.log(paths.length)
 
-// start is initial
-// connections to A and b
-
-// for each specific path
-// check whether you have accessed
-
-//  start- A - c - A -
-
-// start - A, start - b,
-
-// start - b, start - A - c, start - A - end, start - A - b,
-
-
-// start - b, start - A - c, start - A - end, start - A - b,
