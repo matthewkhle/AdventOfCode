@@ -36,7 +36,7 @@ let isOpener = (character) => {
 // 	}
 // }
 
-let score = 0
+let stackScores = []
 for (let i = 0; i < lines.length; i++) {
 	let line = lines[i]
 	let stack = []
@@ -48,30 +48,56 @@ for (let i = 0; i < lines.length; i++) {
 		} else {
 			if (character === ")") {
 				if (stack[stack.length - 1] !== "(") {
-					score += 3
+					stack = []
 					break
 				}
 			} else if (character === "]") {
 				if (stack[stack.length - 1] !== "[") {
-					score += 57
+					stack = []
 					break
 				}
 			} else if (character === "}") {
 				if (stack[stack.length - 1] !== "{") {
-					score += 1197
+					stack = []
 					break
 				}
 			} else if (character === ">") {
 				if (stack[stack.length - 1] !== "<") {
-					score += 25137
+					stack = []
 					break
 				}
 			}
 			stack.pop()
 		}
 	}
+
 	// console.log(stack)
-	// console.log()
+
+	// get completion score
+	let score = 0
+	for (let i = stack.length - 1; i >= 0; i--) {
+		let character = stack[i]
+		// console.log(character)
+		if (character === "(") {
+			score = score * 5 + 1
+		} else if (character === "[") {
+			score = score * 5 + 2
+		} else if (character === "{") {
+			score = score * 5 + 3
+		} else if (character === "<") {
+			score = score * 5 + 4
+		}
+	}
+
+	if (stack.length > 0) {
+		stackScores.push(score)
+	}
 }
 
-console.log(score)
+stackScores.sort((a, b) => {
+	return b - a
+})
+
+let middleIndex = Math.floor(stackScores.length / 2)
+
+console.log(stackScores[middleIndex])
