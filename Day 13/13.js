@@ -6,16 +6,28 @@ let fileContents = fs.readFileSync("Day 13/dots.txt", "utf8")
 let dataSeparatedByLine = fileContents.split("\r\n")
 
 let dots = []
+let maxX = 0
+let maxY = 0
 for (let i = 0; i < dataSeparatedByLine.length; i++) {
 	let dot = dataSeparatedByLine[i].split(",")
+	dot = dot.map((x) => {
+		return parseInt(x)
+	})
+
+	let x = dot[0]
+	let y = dot[1]
+	if (x > maxX) {
+		maxX = x
+	}
+	if (y > maxY) {
+		maxY = y
+	}
+
 	dots.push(dot)
 }
 
-dots.forEach((element, index) => {
-	dots[index] = dots[index].map((x) => {
-		return parseInt(x)
-	})
-})
+maxX++
+maxY++
 
 // folds
 fileContents = fs.readFileSync("Day 13/folds.txt", "utf8")
@@ -39,9 +51,9 @@ for (let i = 0; i < dataSeparatedByLine.length; i++) {
 }
 
 // prepare transparent paper
-let paper = new Array(1500)
+let paper = new Array(maxY)
 for (let i = 0; i < paper.length; i++) {
-	paper[i] = new Array(1500).fill(".")
+	paper[i] = new Array(maxX).fill(".")
 }
 
 // fill paper with initial dots
