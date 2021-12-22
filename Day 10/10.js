@@ -1,7 +1,7 @@
 // initial data setup
 const fs = require("fs")
 
-const fileContents = fs.readFileSync("./2021/Day 10/10.txt", "utf8")
+const fileContents = fs.readFileSync("Day 10/10.txt", "utf8")
 let dataSeparatedByLine = fileContents.split("\r\n")
 
 let lines = []

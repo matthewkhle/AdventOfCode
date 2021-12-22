@@ -1,6 +1,6 @@
 const fs = require("fs")
 
-const fileContents = fs.readFileSync("./2021/Day 6/6.txt", "utf8")
+const fileContents = fs.readFileSync("Day 6/6.txt", "utf8")
 
 let startingFish = fileContents.split(",")
 for (let i = 0; i < startingFish.length; i++) {

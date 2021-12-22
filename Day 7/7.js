@@ -1,6 +1,6 @@
 const fs = require("fs")
 
-const fileContents = fs.readFileSync("./2021/Day 7/7.txt", "utf8")
+const fileContents = fs.readFileSync("Day 7/7.txt", "utf8")
 let positions = fileContents.split(",")
 positions = positions.map((x) => {
 	return parseInt(x)

@@ -1,5 +1,5 @@
 numbers = []
-with open('./2021/Day 1/1.txt') as file:
+with open('Day 1/1.txt') as file:
     for line in file:
         numbers.append(line)
 
