@@ -39,7 +39,7 @@ for (let i = 0; i < dataSeparatedByLine.length; i++) {
 	if (fold[0] == "x") {
 		fold = {
 			axis: "x",
-			value: fold.substring(2),
+			value: parseInt(fold.substring(2)),
 		}
 	} else if (fold[0] == "y") {
 		fold = {
@@ -51,10 +51,17 @@ for (let i = 0; i < dataSeparatedByLine.length; i++) {
 }
 
 // prepare transparent paper
-let paper = new Array(maxY)
-for (let i = 0; i < paper.length; i++) {
-	paper[i] = new Array(maxX).fill(".")
+let createPaper = (xSize, ySize) => {
+	let createdPaper = new Array(ySize)
+	console.log("xSize: " + xSize)
+	for (let i = 0; i < createdPaper.length; i++) {
+		createdPaper[i] = new Array(xSize).fill(".")
+	}
+
+	return createdPaper
 }
+
+let paper = createPaper(maxX, maxY)
 
 // fill paper with initial dots
 for (let i = 0; i < dots.length; i++) {
@@ -64,4 +71,73 @@ for (let i = 0; i < dots.length; i++) {
 	paper[y][x] = "#"
 }
 
+let foldPaper = (fold) => {
+	// folding on x axis
+	// move right side to left side
+	// create new paper of half x and same y
+	let xSize = null
+	let ySize = null
+	if (fold.axis === "x") {
+		xSize = fold.value
+		ySize = paper.length
+	} else if (fold.axis === "y") {
+		xSize = paper[0].length
+		ySize = fold.value
+	}
+
+	let newPaper = createPaper(xSize, ySize)
+
+	for (let y = 0; y < newPaper.length; y++) {
+		for (let x = 0; x < newPaper[y].length; x++) {
+			newPaper[y][x] = paper[y][x]
+		}
+	}
+
+	// console.table(newPaper)
+
+	if (fold.axis === "x") {
+		for (let y = 0; y < newPaper.length; y++) {
+			for (let x = 0; x < newPaper[y].length; x++) {
+				let mirrorX = paper[y].length - 1 - x
+				if (paper[y][mirrorX] == "#") {
+					newPaper[y][x] = paper[y][mirrorX]
+				}
+			}
+		}
+	} else if (fold.axis === "y") {
+		for (let y = 0; y < newPaper.length; y++) {
+			for (let x = 0; x < newPaper[y].length; x++) {
+				let mirrorY = paper.length - 1 - y
+				if (paper[mirrorY][x] == "#") {
+					newPaper[y][x] = paper[mirrorY][x]
+				}
+			}
+		}
+	}
+
+	paper = newPaper
+}
+
+folds.forEach((fold) => {
+	foldPaper(fold)
+})
+
+let dotsCount = 0
+// for (let y = 0; y < paper.length; y++) {
+// 	for (let x = 0; x < paper[y].length; x++) {
+// 		if (paper[y][x] == "#") {
+// 			dotsCount++
+// 		}
+// 	}
+// }
+
+paper.forEach((row) => {
+	row.forEach((element) => {
+		if (element == "#") {
+			dotsCount++
+		}
+	})
+})
+
 console.table(paper)
+console.log(dotsCount)
