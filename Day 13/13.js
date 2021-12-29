@@ -53,7 +53,7 @@ for (let i = 0; i < dataSeparatedByLine.length; i++) {
 // prepare transparent paper
 let createPaper = (xSize, ySize) => {
 	let createdPaper = new Array(ySize)
-	console.log("xSize: " + xSize)
+
 	for (let i = 0; i < createdPaper.length; i++) {
 		createdPaper[i] = new Array(xSize).fill(".")
 	}
