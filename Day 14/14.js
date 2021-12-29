@@ -16,33 +16,35 @@ for (let i = 0; i < dataSeparatedByLine.length; i++) {
 
 // console.log(rules)
 
-let start = "NNCB"
-let polymerTemplate = null
+let polymerTemplate = "NNCB"
 
 let steps = 40
 
 for (let step = 0; step < steps; step++) {
-    polymerTemplate = start.substring(0, 1)
-	for (let i = 0; i < start.length - 1; i++) {
-		let pair = start.substring(i, i + 2)
+	console.log(step)
 
-		let insertion = rules[pair] + pair.substring(1)
-		polymerTemplate += insertion
+	for (let i = 0; i < polymerTemplate.length - 1; i += 2) {
+		// console.log(i)
+		let pair = polymerTemplate.slice(i, i + 2)
+
+		let insertion = rules[pair]
+		polymerTemplate =
+			polymerTemplate.slice(0, i + 1) +
+			insertion +
+			polymerTemplate.slice(i + 1)
 	}
-    start = polymerTemplate.slice()
 }
 
-// console.log(polymerTemplate)
-
+console.log(polymerTemplate)
 
 let elementCount = {}
 for (let i = 0; i < polymerTemplate.length; i++) {
-    let element = polymerTemplate[i]
-    if (!elementCount[element]) {
-        elementCount[element] = 1
-    } else {
-        elementCount[element]++
-    }
+	let element = polymerTemplate[i]
+	if (!elementCount[element]) {
+		elementCount[element] = 1
+	} else {
+		elementCount[element]++
+	}
 }
 
 console.log(elementCount)
